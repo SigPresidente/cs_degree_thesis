@@ -1,0 +1,121 @@
+\chapter{Risultati e Confronto}
+
+In questo capitolo vengono analizzati i risultati ottenuti tramite backtesting della strategia sui dati storici forniti da Yahoo Finance.
+La simulazione confronta le performance della strategia algoritmica creata ad-hoc con i valori di performance indicati sul sito web ufficiale di Moneyfarm, nel periodo dal 2018 ad oggi.
+I grafici contengono i risultati per i tre diversi profili di rischio (basso, medio e alto), oltre a una strategia di investimento periodico (PAC) con acquisti mensili fissi.
+
+Il capitolo è diviso in due parti: la prima è focalizzata sulle performance operando esclusivamente con Nasdaq-100, mentre la seconda riguarda i risultati del portafoglio diversificando gli investimenti con due ulteriori simboli (Dax-30, indice tedesco, e S\&P-500, altro indice americano).
+Il programma, nel caso in cui vengano utilizzati più simboli, prevede la divisione equa del capitale iniziale tra i vari partecipanti.
+
+%disclaimer
+Il backtesting prende in considerazione fattori quali le commissioni sulle operazioni (0,05\% fisso per semplicità) e le tasse sul capital gain (26\% in Italia, applicate annualmente) per approssimare quanto meglio possibile la simulazione ad una situazione reale.
+
+
+\section{Risultati investendo in Nasdaq-100}
+%premessa su funzionamento PAC
+Prima di procedere con i risultati è necessario fare una premessa.
+In figura 4.1 viene mostrata l'evoluzione del portafoglio sotto la strategia PAC, che prevede acquisti mensili fissi indicativi di 100\$, in modo da dividere cosi il capitale iniziale in 50 operazioni eseguite in mesi consecutivi, per sfruttare il principio del dollar-cost averaging (in situazioni di incertezza, dividere gli acquisti in piccole operazioni distribuite nel tempo fornisce i migliori risultati).
+La linea rossa rappresenta l'investimento cumulativo, che cresce linearmente nel tempo, mentre la linea blu indica il valore del portafoglio al netto delle spese (tasse e commissioni).
+L'area ombreggiata in blu evidenzia il gain/loss netto, che rimane positivo per la maggior parte del periodo, raggiungendo un picco verso la fine del 2025.
+
+%4.1 Timeline PAC, solo nasdaq
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/pac_investment_timeline_ndx.png}
+    \caption{PAC - Timeline di acquisto}
+    \label{fig:pac timeline}
+\end{figure}
+
+Dal grafico Monthly Purchase Points, i punti di acquisto mensili (cerchi blu) sono sovrapposti alla curva dei prezzi Nasdaq-100 (linea nera).
+Si nota come questo metodo comporti che gli acquisti avvengano in fasi di mercato sia rialziste che ribassiste, sfruttando l'effetto di mediazione dei costi prima accennato (dollar-cost averaging).
+Ad esempio, durante il calo del 2020 (legato alla pandemia COVID-19), gli acquisti a prezzi bassi contribuiscono a un recupero accelerato nel 2021-2022.
+Tra il 2022-2024 l'indice passa in una fase di lateralizzazione, lasciando il capitale invariato.
+Verso il 2025-2026, il portafoglio subisce una correzione, ma beneficia infine dell'ascesa dell'indice, riportando il gain in positivo.
+E' importante notare la posizione dei dip di mercato: sovrapponendo questo grafico con quello visto precedentemente nel capitolo 2 (fig 2.2) riguardo i rendimenti del profilo 7 di MoneyFarm, si può osservare una similitudine importante negli andamenti, a sostegno della tesi iniziale che i R-A aggressivi investono principalmente in tech e che \textbf{il settore tech nel 2025 E' il Nasdaq-100}.
+
+
+%4.2 equity totale, solo nasdaq
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/equity_comparison_all_profiles_ndx.png}
+    \caption{NDX - Bilanci finali a confronto}
+    \label{fig:equity nasdaq}
+\end{figure}
+
+%Grafico Equity solo Nasdaq
+Il grafico 4.2 illustra l'andamento del capitale di bilancio per tutti i profili: alto rischio (rosso, HIGH), medio rischio (arancione, MEDIUM), basso rischio (verde, LOW), PAC (blu) e benchmark Moneyfarm (stessi colori e linee tratteggiate per i profili basso, medio e alto).
+
+Le curve algoritmiche mostrano una crescita esponenziale, particolarmente pronunciata per il profilo alto rischio, che raggiunge valori superiori ai 50.000\$ durante il 2022, per poi stabilizzarsi a circa 37.000\$ nel 2026, partendo da un capitale iniziale di 5.000\$.
+Si osserva un pattern a gradini nelle curve algoritmiche, dovuto alla strategia: la singola posizione legata al segnale (elaborato in backtesting.py) rimane aperta fino al raggiungimento del trailing stop; in quell'istante la posizione viene chiusa ed il gain/loss viene registrato.
+Il profilo HIGH presenta i salti più ampi: sfrutta l'elevata volatilità dell'indice per guadagni importanti, ma sopporta drawdown significativi, specialmente nel 2023. 
+Le curve di Moneyfarm sono rappresentate come linee continue a causa della mancanza di dati specifici riguardo le operazioni eseguite. Importante è il punto di "arrivo" che riflette i rendimenti dichiarati al netto di tasse e commissioni, calcolate dal programma prima della stampa finale.
+Nel complesso le strategie si posizionano come previsto: HIGH presenta il maggior ritorno, seguito da MEDIUM e PAC, ed infine LOW.
+
+%4.3 volatilità dei profili, solo nasdaq
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/volatility_comparison_all_profiles_ndx.png}
+    \caption{NDX - Volatilità dei profili a confronto}
+    \label{fig:volatilità nasdaq}
+\end{figure}
+
+Dall'istogramma in figura 4.3 si osserva come anche la volatilità sia stata distribuita correttamente fra i vari profili dell'algoritmo, segnale che i limiti fissati fossero congruenti ai livelli di rischio ricercati.
+Le operazioni eseguite con profilo HIGH e MEDIUM (barre rossa e arancione) sono state esponenzialmente più volatili delle corrispettive del R-A di MoneyFarm.
+Per il profilo LOW la volatilità risulta inferiore, ma si ricorda che lo stesso ha terminato i test in perdita.
+Il profilo PAC risulta in linea con le aspettative: la volatilità segue strettamente i valori dell'indice.
+
+%4.4 performance dei profili, solo nasdaq
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/performance_metrics_all_profiles_ndx.png}
+    \caption{NDX - Performance dei profili a confronto}
+    \label{fig:performance nasdaq}
+\end{figure}
+
+Il grafico in figura 4.4 presenta barre comparative per ritorno totale vs benchmark, Sharpe ratio, massimo drawdown ed un'ulteriore visualizzazione del ritorno dei profili.
+Il capital gain dell'algoritmo HIGH supera il 2.067\%, contro l'88,5\% (netto) di Moneyfarm alto rischio.
+Il profilo medio rischio algoritmico raggiunge il 148,5\%, mentre il basso termina in leggera perdita, -0,2\%.
+Il profilo PAC risulta in gain a +115\%, un valore leggermente inferiore al MEDIUM.
+
+Lo Sharpe Ratio, che misura il rendimento proporzionato al rischio, è positivo per i profili di trading algoritmici (0,58 alto, 0,33 medio, 0,53 basso) indicando un buon trade-off rischio-rendimento. Non brilla però se confrontato al benchmark di MoneyFarm (0.8 dichiarato) grazie alla bassa volatilità.
+Il PAC si posiziona a -0,47 a causa appunto della elevata volatilità rispetto al guadagno potenziale.
+
+Il Drawdown massimo (perdita massima sopportata) è più contenuto nei profili algoritmici rispetto al PAC, grazie all'utilizzo del trailing stop.
+
+Nel complesso, questi risultati evidenziano la superiorità dell'algoritmo, specialmente per profili ad alto rischio, dove la volatilità dell'indice è sfruttata per rendimenti esponenziali, rispetto al R-A.
+La strategia PAC genera un buon ritorno, nonostante l'elevata volatilità. Questa strategia si rivela robusta per investitori passivi, ma sotto-performante rispetto ai profili attivi in fasi di mercato rialzista.
+
+
+
+\section{Risultati dopo la Diversificazione}
+La seconda parte del capitolo analizza i risultati aggregati del portafoglio diversificato, affiancando gli investimenti in Nasdaq-100 a due ulteriori indici: Dax-30 ed S\&P-500.
+Il programma prevede questa casualità, dividendo il capitale iniziale (mantenuto uguale a 5.000\$) equamente fra i simboli. Anche il PAC utilizza investimenti di 100/3\$ per simbolo, al mese.
+Le successive figure 4.5 e 4.6 forniscono una vista olistica, mostrando come l'operazione di diversificazione mitighi i rischi rispetto al singolo simbolo.
+
+%4.5 equity totale, diversificato
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/portfolio_cumulative_returns_log.png}
+    \caption{Portfolio Diversificato - Bilanci finali a confronto}
+    \label{fig:equity diversificato}
+\end{figure}
+
+Il grafico in figura 4.5 utilizza una scala logaritmica per il moltiplicatore del valore del portafoglio, facilitando il confronto di crescite esponenziali.
+La linea rossa (HIGH algoritmico) domina, raggiungendo un moltiplicatore alla sesta verso il 2026, grazie ad operazioni aggressive su tutti i simboli. 
+Le linee Moneyfarm (tratteggiate) rimangono uguali, riflettendo il fatto che il portafoglio è già diversificato anche durante i primi confronti.
+
+La diversificazione riduce anche la volatilità: ad esempio, il profilo alto rischio mostra salti meno estremi rispetto al solo Nasdaq-100, beneficiando della correlazione bassa tra indici (il Dax-30 è più stabile durante la crisi). Si osserva lo stesso miglioramento anche sui profili MEDIUM e LOW.
+Il PAC (blu) cresce in modo costante, superando i rendimenti MoneyFarm complessivi, ed addirittura anche il profilo MEDIUM.
+Complessivamente, l'algoritmo alto rischio genera un ritorno del +157mila\%, con patrimonio finale netto di circa 7,5 milioni di dollari (dai 5.000\$ iniziali), dimostrando l'impatto della diversificazione.
+
+%4.6 performance dei profili, diversificato
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/portfolio_performance_table.png}
+    \caption{Portfolio Diversificato - Performance dei profili a confronto}
+    \label{fig:performance diversificato}
+\end{figure}
+
+La tabella 4.6 riassume infine le metriche aggregate: il profilo HIGH si posiziona per primo, con però la maggior volatilità ed un drawdown medio.
+In seconda posizione arriva il PAC, che dopo la diversificazione abbassa notevolmente la volatilità e quindi recupera in Sharpe Ratio. Il drawdown rimane comunque il peggiore.
+In terza posizione, subito in coda al MEDIUM, si trova il profilo PAC; ed infine il profilo LOW, che chiude comunque in lieve guadagno (+16\%) battendo i benchmark di MoneyFarm (+1,8\%).

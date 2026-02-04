@@ -1,0 +1,34 @@
+\chapter{Introduzione}
+\section{Contesto}
+
+Per rispondere a questa domanda, è prima necessario comprendere il contesto storico.
+
+La crisi finanziaria associata alla pandemia da COVID-19 ha rappresentato un catalizzatore significativo per l'evoluzione della cultura finanziaria tra i giovani di tutto il mondo, evidenziando vulnerabilità pre-esistenti e stimolando una maggiore consapevolezza: inflazione alle stelle, stipendi congelati e cultura sociale del paragone fanno sorgere nuove necessità, seppure i dati indichino l'assenza di un incremento netto dei livelli di alfabetizzazione finanziaria - punteggio italiano OCSE PISA di 484 nel 2022, al di sotto della media OCSE (498), con il 18\% dei 15enni sotto il livello base.
+
+In Italia, quasi il 40\% dei giovani (18-34 anni) è incapace di fronteggiare imprevisti di 2.000€. Inoltre, il 54\% riferisce di percepire la crisi come una minaccia grave. Tutto ciò accentua le disuguaglianze di genere e territoriali (ad esempio donne e residenti al Sud).
+
+Questa diffusa paura legata alla difficoltà intrinseca di capire il complesso mondo della borsa genera un mix efficace: il mondo dei social media viene letteralmente invaso dalle figure dei "guru finanziari", le piattaforme di trading spopolano sugli app-store e l'ideologia generale tende alla ricerca della cosiddetta work-life balance e del passive income.
+
+Anche le Banche presentano la loro proposta per rispondere ad un pubblico digitalizzato, con pochi fondi di partenza e che non può quindi sostenere commissioni alte: nascono i Robo-Advisor, strumenti automatizzati per la gestione degli investimenti. 
+Il cliente retail può iniziare con cifre modeste (solitamente da 500€ a 5.000€), sostenendo commissioni basse (in media fra 0.25-0.5\%), a cui associa un profilo di rischio individuato tramite questionario, e a cui può eventualmente aggiungere mensilmente una cifra.
+
+\section{Ipotesi}
+
+Questa tesi vuole analizzare l’impatto di questi servizi, confrontando i rendimenti di un R-A in regime amministrato (verrà preso in esame in particolare MoneyFarm, uno fra i più diffusi e redditizi, e soprattutto che rende disponibili pubblicamente i propri dati) con un algoritmo di trading “semplice” sviluppato ad hoc (in questo caso verrà utilizzata la strategia moving-average crossover) che opera in loop su una piattaforma gestita da broker.
+
+L’ipotesi di ricerca valuta se, ad oggi, sia possibile creare ed utilizzare un algoritmo personalizzato che possa imitare il metodo d’investimento di un R-A, superarne i rendimenti a fronte di un maggiore involvement da parte dell’utente, con un livello di rischio simile ai profili forniti dalle Banche.
+Questo per tutelare l’utente con literacy bassa ed insieme fornire la tranquillità necessaria rimuovendo la componente dell’emotività umana dalla strategia.
+Quanto può influire, se non meglio costare, un minimo livello di cultura finanziaria, sorprendentemente assente fra i giovani italiani, sui risparmi?
+
+
+\section{Metodologia}
+
+La metodologia prevede la creazione di un algoritmo per l’operatività, che raccoglie dati da fonti ufficiali e li utilizza per implementare una specifica strategia (a valori configurabili).
+Verranno effettuate simulazioni empiriche tramite Python su dataset storici, considerando fattori reali quali commissioni e tasse italiane. 
+I risultati verranno confrontati con le performance dichiarate da MoneyFarm, valutando metriche come rendimento (patrimonio finale), volatilità (a simboleggiare il rischio), drawdown (massima perdita), ed indice di Sharpe (indice rischio/rendimento).
+
+La tesi presenta il diagramma UML dell’architettura software utilizzata, correlato a specifiche descrizioni dei vari blocchi necessari all'espletamento delle funzioni.
+
+Il lavoro contribuisce al dibattito sull'automazione finanziaria, offrendo un'analisi tecnica per investitori e sviluppatori.
+
+È importante evidenziare che, attraverso i materiali qui presenti, NON vengono forniti consigli finanziari né consulenza finanziaria. Le opinioni tecniche condivise hanno il solo scopo di formazione ed informazione. La decisione finale riguardante ogni investimento è una scelta personale e individuale del lettore.

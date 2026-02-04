@@ -1,0 +1,161 @@
+\chapter{Sistemi Software per Trading Algoritmico}
+%Intro, da ordinare bene
+Il trading algoritmico consente di automatizzare strategie di investimento tramite un sistema software personalizzato.
+In questo capitolo verrà descritto il metodo di sviluppo del programma, la strategia scelta per i test, gli strumenti utilizzati e il diagramma delle attività del main loop.
+
+\section{Premessa: Benchmark, Periodo e Strategia}
+%Criteri della tesi
+Prima di proseguire, è importante fare un'overview delle scelte fatte in fase di concepimento: nel capitolo 2 è stata analizzata la struttura del R-A di MoneyFarm, i suoi KPI e la composizione dei portafogli. 
+I criteri da rispettare perchè il test sia il più attendibile possibile sono quindi chiari: la struttura dell'algoritmo dovrà essere semplice, il portafoglio dovrà rispecchiare quanto più possibile quello utilizzato dal R-A, e il periodo di test dovrà incorporare momenti di crescita così come di crisi.
+Questo approccio, volto all'accessibilità, richiede competenze informatiche moderate e risorse computazionali minime.
+
+%Perchè Nasdaq
+La configurazione dell'algoritmo accetterà una lista di simboli (strumenti d'investimento).
+Verrà utilizzato inizialmente solo l'indice Nasdaq-100, simbolo del periodo AI-driven di questi anni.
+Come discusso nel Capitolo 2, i Robo-Advisor tendono ad investire prevalentemente in ETF tech, riflettendo l'evoluzione del mercato verso settori innovativi.
+Nel 2025, si è assistito ad un significativo shift dei mercati verso l'AI, con investimenti a livelli mai visti prima in questo ambito.
+
+Basti pensare che, rispetto a tutte le aziende presenti nell'indice Nasdaq-100, circa il 49\% del capitale è concentrato solo fra le prime cinque: Nvidia, Apple, Microsoft, Amazon e Alphabet (Google). 
+Di fatto, la gran parte degli ETF disponibili, composti da S\&P-500 o Nasdaq-100, sono partecipati per oltre il 40-50\% da queste specifiche aziende, tutte fortemente legate all'AI e alla tecnologia. 
+È quindi estremamente difficile costruire un portafoglio senza partecipare attivamente all'investimento nell'AI, sia per piccoli che per grandi investitori.
+
+La scelta del simbolo, come già accennato, è pertanto ricaduta sul Nasdaq-100: un indice che rappresenta l'innovazione e l'economia moderna, focalizzandosi sulle aziende tecnologiche e ad alto potenziale di crescita.
+Lanciato nel 1985 dal Nasdaq Stock Market (fondato nel 1971, è stato il \textit{primo scambio computerizzato al mondo}), il Nasdaq-100 è composto da 100 delle più grandi aziende non-finanziarie quotate sull'indice, selezionate in base alla capitalizzazione di mercato e ponderate di conseguenza.
+I settori principali includono tecnologia (circa il 60\%), consumer discretionary (18\%), healthcare (6\%) e telecomunicazioni (5\%), con un'enfasi su giganti innovativi come quelli prima menzionati. 
+Oggi, nel 2025, riveste un'importanza cruciale in borsa, con oltre 200 prodotti di tracking e più di 600 miliardi di dollari in AUM, simboleggiando la dominanza dell'AI e della digitalizzazione nei mercati globali.
+Questa scelta è significativa per il backtest poiché l'indice cattura trend volatili e innovativi, offrendo un benchmark realistico per strategie algoritmiche in contesti moderni.
+
+%Perchè dal 2018
+Il backtesting dell’algoritmo verrà condotto su dati storici dal 2018 ad oggi, per coprire fasi di mercato volatili (es. post-COVID 2020) e stabili (2023-2025), offrendo un contesto robusto per valutare la strategia.
+Infine, verrà eseguito un test su simboli multipli per verificare la variazione delle performance una volta introdotto il concetto di diversificazione.
+
+%Strategia
+Per quanto riguarda la strategia, verranno utilizzate due medie mobili semplici (SMA): una a breve e una a lungo termine, che identificano il trend del prezzo di chiusura del simbolo/i selezionato/i. 
+Un segnale si genererà all'intersecarsi delle due: un segnale di acquisto quando la media breve supera la linea di trend a lungo termine, mentre un segnale di vendita al crossover opposto. 
+In figura 3.1 si osserva la strategia evidenziata: la linea verde rappresenta la media mobile 50, mentre la linea rossa la 200. All'intersecarsi, il programma rileverà il crossover e calcolerà l'eventuale operazione da eseguire.
+
+%3.1 MA Crossover Strategy
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/MA-Crossover .jpg}
+    \caption{Strategia MA Crossover}
+    \label{fig:UML MA Crossover}
+\end{figure}
+
+Questo metodo è molto conservativo: si può facilmente notare come il prezzo (linea blu) \textbf{inizi la discesa ben prima} che le due medie si intersechino.
+Questo accade poichè la media mobile è un valore ottenuto dai dati del passato e non del presente. 
+Il segnale quindi risulta in ritardo rispetto al mercato, lasciando sul tavolo potenzialmente molto guadagno. 
+Unendo questa strategia all'indicatore RSI (Relative Strenght Index), che confermerà la forza del movimento, si eviteranno falsi segnali: se il crossover è stato rilevato ma il movimento è ormai rallentato (soglie di oversold - asset molto venduto, e di overbought - acquisto molto popolare), l'algoritmo eviterà di aprire posizioni troppo rischiose.
+Il metodo non verrà volutamente reso più complesso.
+
+%3.2 UML Activity
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/UML Activity Simplified.png}
+    \caption{Diagramma UML delle Attività}
+    \label{fig:UML Activity}
+\end{figure}
+
+\section{Diagramma delle Attività}
+Si riporta in figura 3.2 il diagramma UML semplificato delle attività del programma.
+L’architettura software seguirà questo flusso: configurazione dei profili; acquisizione dati di mercato; calcolo della strategia e generazione dei segnali di trading; invio segnali ad MT5 e simulazione delle posizioni per il backtesting; stampa dei grafici.
+
+Viene evidenziata nel grafico la modularità del sistema, implementato in modo da accettare in ingresso più simboli così da poter diversificare a piacimento il portafoglio, e più livelli di rischio con i relativi configuration data.
+Il programma è stato scritto in Python, sfruttando varie librerie: yinance per l'acquisizione dati, pandas e numpy per l’elaborazione, ta-lib e matplotlib per la stampa dei grafici e MetaTrader5 per l'interfaccia con la piattaforma di trading vera e propria.
+
+
+\section{Parametri di Configurazione}
+%Config
+I parametri più importanti da discutere, da cui dipenderà la mitigazione del rischio dei singoli profili, sono visualizzati nell'estratto di codice da "account\_data.py" (listing 3.1), un file dedicato ai valori di configurazione per personalizzare l'algoritmo.
+E' stata prevista in fase progettuale la possibilità di distinguere vari profili di rischio, cosi da eseguire in parallelo i test e poter confrontare i risultati della stessa strategia con diverse tolleranze.
+In apertura si osservano gli indicatori di questi "limiti": SHORT\_MA e LONG\_MA sono i periodi (in giorni) con cui verrà calcolata la media mobile semplice.
+I valori di RSI sono il periodo (in giorni) fra cui calcolare l'indicatore, ed i relativi valori di soglia (OVERSOLD, OVERBOUGHT) per decidere se il segnale è falso o attendibile.
+
+%Metodo di stop loss
+Perchè un algoritmo di trading sia veramente indipendente dall'input dell'operatore, oltre a capire quando aprire le posizioni dovrà anche essere in grado di chiuderle autonomamente. Vengono introdotti i valori di Trailing Stop Loss (TRAIL\_PERCENT).
+Una volta generato un segnale ed aperta una posizione, l'algoritmo fisserà una percentuale di perdita accettabile.
+Questa sarà la rete di sicurezza che non permetterà di scendere sotto una determinata soglia di perdita durante la singola operazione, per conservare il capitale.
+Non è stato intenzionalmente fissato un valore di Take Profit (percentuale a cui la posizione in guadagno si chiude automaticamente), per evitare perdite in condizioni di lateralizzazione, ovvero quando il mercato non sale nè scende.
+Verrà utilizzata una safety net "mobile" che seguirà fedelmente il prezzo della posizione nel caso dovesse crescere, cosi da lasciar correre in salita il lotto e fermarlo solo nell'eventualità che rintracci oltre una certa percentuale di perdita.
+Anche il valore di Trailing Stop Loss verrà personalizzato in accordo con il tipo di profilo.
+
+\begin{lstlisting}[
+    caption={Parametri di Configurazione},
+    label={lst:config},
+    float=htbp
+]
+#Strategy parameters with profiles:
+PROFILES        = ["high", "medium", "low", "pac"]
+SHORT_MA        = [10,  20, 50, None]   #days
+LONG_MA         = [50,  100, 120, None]
+RSI_PERIOD      = [9,   14,  14, None]  #days    
+RSI_OVERBOUGHT  = [40,  50,  65, None]
+RSI_OVERSOLD    = [60,  50,  35, None]
+TRAIL_PERCENT   = [0.03, 0.02,  0.015]  # 3%, 2%, 1,5%
+
+#Account parameters
+SYMBOLS         = ["^NDX", "^SPX", "^GDAXI"]
+INITIAL_DEPOSIT = 5000 #USD
+COMMISSION      = 0.0005 #spread commission on trade
+
+#PAC parameters
+PAC_MONTHLY_INVESTMENT = 100 #USD
+\end{lstlisting}
+
+Quindi riassumendo: il profilo HIGH sarà il più speculativo, la finestra di giorni per il calcolo del trend breve e lungo è più stretta, in modo da rilevare più punti di crossover e generare potenzialmente più operazioni; inoltre la soglia di RSI è rilassata, per abbassare le difese.
+Rendendo invece il periodo SMA più ampio, il potenziale di operatività viene abbassato, creando così il profilo LOW.
+Il profilo MEDIUM è una via di mezzo tra i due precedenti.
+Come visibile nell'estratto di codice, è stato aggiunto anche un profilo PAC. Questo opera seguendo una strategia ancora più semplice, venendo gestito come un piano di accumulo del capitale (PAC). Eseguirà mensilmente operazioni di acquisto di posizioni long per la somma di 100\$ (scelta arbitraria per dividere gli acquisti in 50 mesi consecutivi), fino all'investimento dell'intero capitale di partenza (5.000\$).
+
+\section{Acquisizione Dati ed Elaborazione Strategia}
+%Data aquisition
+Il file "import\_data.py" è dedicato all'acquisizione dei dati storici da una solida fonte nel settore: per questa ricerca è stato selezionato Yahoo Finance.
+Il programma verifica l'esistenza di un file .csv con i dati relativi allo specifico simbolo selezionato, lo aggiorna (o crea) alla data odierna come visibile nel listing 3.2.
+Vengono memorizzati valori quali prezzo di apertura e chiusura, punti high e low del giorno e volume di movimento.
+
+\begin{lstlisting}[
+    caption={Tabella dei Dati Storici, per simbolo},
+    label={lst:config},
+    float=htbp
+]
+#Date,      Open,       High,       Low,        Close,      Volume
+2025-12-12, 25531.550,  25605.880,  25104.679,  25196.730,  8724070000
+2025-12-15, 25352.869,  25377.619,  25022.810,  25067.269,  8649240000
+2025-12-16, 24991.490,  25188.759,  24922.939,  25132.939,  7759960000
+2025-12-17, 25167.859,  25193.410,  24647.609,  24647.609,  8616140000
+2025-12-18, 25031.490,  25164.179,  24921.449,  25019.369,  7977920000
+2025-12-19, 25147.300,  25354.820,  25134.259,  25346.179,  12874560000
+\end{lstlisting}
+
+Successivamente il file "signals\_generation.py" elabora i file .csv con i dati storici, ed in accordo con la strategia crea segnali dove lo ritiene opportuno, utilizzando le soglie previste dallo specifico profilo.
+Un esempio è visibile in listing 3.3.
+Nel caso un segnale venga generato, il dato viene memorizzato in un file .csv dedicato, utilizzato in seguito per il backtesting.
+
+\begin{lstlisting}[
+    caption={Esempio di Generazione di segnale Buy},
+    label={lst:signal generation},
+    float=htbp
+]
+#Buy signal
+    df.loc[(df['SMA_short'] > df['SMA_long']) &
+        (df['Prev_short'] <= df['Prev_long']) &
+        (df['RSI'] <= oversold), 'Signal'] = 1
+\end{lstlisting}
+
+\section{Backtesting della Strategia ed Integrazione MT5}
+
+%Come sono stati condotti i test
+L’algoritmo è stato testato con un capitale simulato di \$5.000, assumendo commissioni di trading tipiche di broker italiani (0.05\% fisso per operazione, arrotondato in eccesso).
+Viene sfruttato il file .csv prima menzionato con memorizzati i segnali generati per ogni profilo, e i risultati dei test (guadagni/perdite ed equity finale) vengono a loro volta salvati in un file distinto per generare poi i grafici di confronto.
+
+%Integrazione con MT5
+Il file "metatrader\_integration.py" è stato dedicato all'invio dei segnali alla vera e propria piattaforma di trading, i cui dati di login sono memorizzati in "account\_data.py".
+E' stato scelto MetaTrader5 per l'ottima integrazione con Python, ma sostituendo questo file con uno equivalente per un'altra piattaforma il programma è in grado di funzionare allo stesso modo.
+I risultati da cui verranno formate le conclusioni della tesi sono quelli del backtesting e non del live account su MT5 poichè, come visibile nel capitolo 4, la strategia MACrossover spesso non genera segnali per parecchi mesi.
+
+\section{Stampa dei Grafici delle Performance}
+
+Infine il file "print\_graphs.py" è dedicato alla visualizzazione dei risultati ottenuti dal backtesting, per sviluppare i successivi capitoli 4 e 5.
+Sono stati scelti diversi tipi di grafico in base alla complessità dei dati da visualizzare, fra cui istogrammi per confrontare le performance e semplici tabelle per riassumere le percentuali di gain/loss.
+Sono state utilizzate colorazioni distinte per rappresentare i diversi profili di rischio attraverso tutti i grafici: verde per LOW, arancione per MEDIUM, rosso per HIGH e blu per PAC.
+

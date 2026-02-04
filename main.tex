@@ -1,0 +1,142 @@
+\documentclass[twoside,12pt,openright]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[a4paper,top=3cm,bottom=3cm,left=3cm,right=3cm,marginparwidth=1.5cm,bindingoffset=15mm,heightrounded]{geometry}
+\usepackage{csquotes}
+\usepackage{quoting}
+\quotingsetup{font=small}
+
+% Times new Roman font e interlinea a 1.5 (mandatorie Mercatorum) 
+\usepackage{times}
+\linespread{1.5}
+
+% Per creare box colorati
+\usepackage{tcolorbox} 
+
+\usepackage{mdframed}
+
+%Stile per la vignetta
+\tcbset{
+    myvignette/.style={
+        colback=gray!20,    % Sfondo grigio chiaro
+        colframe=black,     % Bordo nero
+        coltitle=white,     % Titolo bianco
+        fonttitle=\bfseries,% Titolo in grassetto
+        boxrule=1pt,        % Spessore del bordo
+        rounded corners,    % Angoli arrotondati
+        width=\textwidth,   % Larghezza pari alla pagina
+        sharp corners=north,% Angolo superiore non arrotondato
+        title={Caso Particolare} % Titolo di default
+    }
+}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+
+%Per inserire codice
+\usepackage{xcolor}% Per la colorazione del codice
+\usepackage{colortbl} 
+\usepackage{array}
+\usepackage{listings}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    %baselinestretch=0.9,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    rulecolor=\color{black},
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={(*@}{@*)},
+    xleftmargin=17pt,
+    framexleftmargin=17pt,
+    framexrightmargin=5pt,
+    framexbottommargin=4pt
+}
+
+\lstdefinestyle{MatlabStyle}{% Se si usa un altro linguaggio, modificare "language"
+    language=mathlab,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    rulecolor=\color{black},
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny, 
+    stepnumber=1,
+    numbersep=5pt
+}
+
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% TikZ libraries
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+
+% TikZ styles
+\tikzstyle{vertex}=[circle, draw, thick, minimum size=15pt, inner sep=1pt]
+\tikzstyle{edge label}=[midway, fill=white, inner sep=1pt, font=\footnotesize]
+\tikzstyle{directed edge}=[-{Latex[length=2mm]}, thick]
+\tikzstyle{undirected edge}=[thick]
+
+\usepackage{algorithm}% For algorithm environment
+\usepackage{algpseudocode} % For pseudocode layout
+% Define argmin operator if not available
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage[style=apa, backend=biber]{biblatex}
+%\usepackage[style=numeric,sorting=none]{biblatex}
+\addbibresource{bibliografia.bib}
+
+%----------------------------MAIN-----------------------------------
+
+\begin{document}
+
+\include{Capitoli/Frontespizio_Merca}
+
+\newpage
+\null
+\newpage
+
+\include{Capitoli/Dedica}
+
+\tableofcontents %Indice
+
+\include{Capitoli/0. Abstract}
+
+\include{Capitoli/1. Introduzione}
+
+\include{Capitoli/2. Stato dell'Arte}
+
+\include{Capitoli/3. Sistemi Software per Trading Automatizzato}
+
+\include{Capitoli/4. Risultati e Confronto}
+
+\include{Capitoli/5. Conclusioni e Sviluppi Futuri}
+
+\include{Capitoli/Thanks}
+
+\nocite{*}
+\printbibliography
+
+\end{document}
+
+%---------------------------END-------------------------------------

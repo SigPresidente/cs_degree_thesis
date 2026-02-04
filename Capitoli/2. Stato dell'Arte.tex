@@ -1,0 +1,62 @@
+\chapter{Stato dell'Arte dei Robo-Advisor}
+
+In questo capitolo verrà esplorato brevemente il mondo dei R-A, per individuare metodi e strumenti da poter utilizzare come paragone per la creazione dell'algoritmo di trading.
+
+\section{Panoramica Software Robo-Advisor}
+
+%Cosa sono, distinzioni
+I R-A rappresentano una delle innovazioni più significative nell’ambito dell'automazione finanziaria degli ultimi anni: essi sono in grado di combinare intelligenza artificiale e algoritmi di ottimizzazione per gestire portafogli a livello retail, con bassi costi di partenza e discrete opzioni di personalizzazione.
+
+%Diffusione storica
+In Italia, piattaforme come MoneyFarm, Tinaba (Banca Profilo) e servizi bancari di Intesa SanPaolo e Unicredit dominano il mercato, offrendo soluzioni in regime amministrato che semplificano la gestione fiscale per gli investitori. 
+La normativa distingue il regime amministrato da quello dichiarativo per la gestione della fiscalità: la Banca si preoccupa di versare i contributi per il cliente, che visualizza direttamente le plus/minus valenze al netto della tassazione.
+
+%Come funzionano
+Il cliente privato non deve quindi fare altro che depositare il denaro sul conto, rispondere a qualche domanda per individuare il profilo di rischio tollerato, ed osservare saltuariamente il grafico del rendimento, eliminando completamente l'emotività umana dall'equazione.
+Questa breve descrizione lascia quindi intuire il motivo della diffusione di questi strumenti negli ultimi anni: comodità di utilizzo ed affidabilità associata al nome della specifica istituzione.
+
+Il funzionamento si basa su architetture software che integrano tre componenti principali: raccolta dati utente tramite questionari digitali, ottimizzazione del portafoglio (es. modello di Markowitz per asset allocation) e rebalancing automatico utilizzando algoritmi ed AI. 
+Nel 2025, il mercato italiano dei robo-advisor conta Assets Under Management (AUM) di circa \$60 miliardi (considerando anche sistemi ibridi), con una crescita annua del 25-30\%, secondo report CONSOB.
+La semplicità operativa e i costi bassi rendono i R-A accessibili, ma limitano la personalizzazione rispetto al trading algoritmico: il cliente non ha la possibilità di scegliere come e in cosa investire.
+
+%Grafici ufficiali diffusione RA
+Per visualizzare l’adozione dei R-A, si riporta un grafico (figura 2.1) di trend degli AUM in Italia (2018-2025) convertiti in dollari (USD), dati basati su report CONSOB e CAGR.
+La crescita esponenziale riflette l’aumento della fiducia degli investitori retail, con un picco 2020-2021 dovuto alla digitalizzazione accelerata dalla pandemia.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/Trend AUM in Italia 2018-2025 (USD).png}
+    \caption{AUM Italia, fonti CAGR e CONSOB}
+    \label{fig:aum italia}
+\end{figure}
+
+\section{Composizione del Portafogli}
+
+%Perchè MoneyFarm
+Per poter creare un sistema che simula gli investimenti di un R-A, è importante capire come esso funziona, come vengano composti i suoi portafogli e quali siano i relativi costi di gestione.
+E' dunque il caso di scegliere uno dei servizi R-A come base di partenza su cui poi verrà costruito l'algoritmo.
+Tra i vari disponibili in Italia nel 2025, fra cui Gimme5, Tinaba, Euclidea, Revolut, Scalable Capital ed eToro;\textbf{MoneyFarm} si distingue come una delle opzioni più consolidate e premiate.
+
+È stato infatti votato per il quinto anno consecutivo come il migliore servizio di consulenza finanziaria in Italia, posizionandosi come il R-A numero uno nel Paese.
+Nel caso di MoneyFarm i portafogli sono gestiti come soluzioni diversificate, costruite principalmente su ETF (Exchange Traded Funds, divenuti popolari negli ultimi anni: sono pacchetti già diversificati attorno ad un tema centrale, per esempio energie rinnovabili, tech, mercati emergenti, ecc) per bilanciare rischio e rendimento in base alla profilazione dell'investitore. 
+
+%Profili e composizione portafogli
+I portafogli di MoneyFarm sono diversificati su asset class globali. L'importante esposizione al settore tech (da cui seguirà la scelta del simbolo su cui l'algoritmo investirà, descritta nel Capitolo 3) deriva indirettamente dalla porzione azionaria, che include indici come MSCI World o S\&P 500, dove il tech rappresenta circa il 25-40\%.
+
+I profili vanno da 1 (più conservativo) a 7 (più aggressivo), con allocazioni che variano in percentuale tra obbligazioni per la stabilità e azioni per la crescita.
+Per semplicità, in questa ricerca verranno considerati solamente i profili 1 (20/80 azionario), 4 (60/40 azionario) e 7 (80/20 azionario), da utilizzare per i confronti finali nel Capitolo 5.
+
+\section{Rendimenti e Metriche Dichiarati}
+%Rendimenti e metriche per confronto
+I rendimenti medi dei R-A italiani si attestano tra il 4\% e il 6\% annuo; MoneyFarm nello specifico dichiara rendimenti molto competitivi rispetto alla concorrenza, con uno Sharpe ratio medio di 0.8-1.0 (l'indice di Sharpe rappresenta il rapporto fra potenziale guadagno e volatilità. Più è alto, più l'investimento è indicativamente buono).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/MoneyFarm Rendimento Grafico.png}
+    \caption{MoneyFarm - Rendimenti dal 2018}
+    \label{fig:moneyfarm grafico}
+\end{figure}
+
+Il grafico in figura 2.2 mostra i rendimenti (lordi) dichiarati da MoneyFarm per il profilo 7 (aggressivo) dal 2018, estratti direttamente dal sito web ufficiale.
+I costi operativi totali (inclusi gestione e commissioni) verranno fissati al 1.28\%, cosi come al 26\% la tassazione italiana sul capital gain.
+Questi dati forniranno da base (benchmark) per il confronto con l’algoritmo di trading sviluppato per la ricerca, esplorato in dettaglio nel capitolo 5.

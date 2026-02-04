@@ -1,0 +1,52 @@
+\chapter{Conclusioni e Sviluppi Futuri}
+
+Questa tesi ha esaminato l’impatto delle architetture software sull’automazione finanziaria in Italia, confrontando un Robo-Advisor bancario (in questo caso MoneyFarm) con un algoritmo di trading semplice sviluppato ad-hoc (Moving-Average Crossover). 
+L’ipotesi di ricerca, se un algoritmo personalizzato possa superare i rendimenti R-A a fronte di maggiore volatilità, è stata verificata tramite simulazioni su dati storici Nasdaq-100 (2018-2025) e successivamente su portafogli diversificati (Nasdaq-100, Dax-30 e S\&P-500).
+
+\section{Verifica delle Ipotesi}
+%Stabilità del RA vs Flessibilità Algo
+Analizzando i risultati ottenuti, emerge chiaramente che non esiste un approccio universale: la scelta tra R-A e trading algoritmico dipende dal profilo dell’investitore, dal suo livello di istruzione e disponibilità d'impegno, e dalla tolleranza al rischio.
+I R-A offrono rendimenti accettabili a livelli di rischio tollerabili, anche scegliendo i profili più azionari.
+L’algoritmo, invece, raggiunge rendimenti sorprendentemente più alti nonostante la sua semplice implementazione, con volatilità molto elevata, evidenziando flessibilità per i periodi incerti ma anche rischi maggiori.
+I dati di configurazione del software hanno rispettato le aspettative, posizionando nel corretto ordine i tre profili di rischio ipotizzati.
+Anche il profilo PAC ha dato ottimi risultati, come visto in precedenza, battendo i ritorni dei R-A più aggressivi.
+
+\section{Limiti Tecnici}
+%Simulazione vs Real-time trading
+L’analisi presenta limiti tecnici intrinseci alle simulazioni: il backtesting non cattura dinamiche reali, come slippage di esecuzione o eventi imprevedibili (come per esempio i flash crash), poichè basa i propri calcoli su dati storici tratti da Yahoo Finance, potenzialmente sovra-stimando i rendimenti ottenuti.
+I costi di brokeraggio sono stati arrotondati per eccesso, ma ogni piattaforma propone commissioni diverse.
+Inoltre, molto importante è ricordare che la strategia dell'algoritmo funziona sui dati del passato; questo non ne garantisce il funzionamento futuro.
+Per quanto riguarda i Robo-Advisor, la ricerca si è basata su benchmark forniti dal distributore del servizio stesso, e non da organi ufficiali del settore.
+Non va dimenticata infine la distinzione normativa: i R-A operano in regime amministrato, con la Banca che gestisce le tasse (26\% sul capital gain), semplificando la vita all’investitore.
+Il trading algoritmico, invece, è tipicamente in regime dichiarativo, imponendo all’utente di dichiarare le plusvalenze autonomamente, un onere che, se mal gestito, può erodere i guadagni.
+Questo dualismo rafforza l’attrattiva dei R-A per i neofiti, ma evidenzia i vantaggi per chi opta per soluzioni informate e personalizzate.
+
+\section{Prospettive Future}
+%Evoluzione AI e Regolamentazione al 2030
+Guardando al futuro, è facile pensare che i servizi e le architetture software per investimenti si evolveranno naturalmente verso modelli AI ibridi, integrando robo-advisor passivi con algoritmi attivi per ottimizzare rendimenti e rischi.
+Nel 2030, con l’EU AI Act che regola l'etica per lo sviluppo delle intelligenze artificiali, i robo-advisor italiani potrebbero incorporare AI generativa per consigli personalizzati, aumentando potenzialmente gli AUM oltre i \$200 miliardi.
+Da non sottovalutare, inoltre, sarà il panorama open-source, che ad oggi conta già numerosi strumenti liberi per l’algo-trading, soprattutto nel campo delle Cryptovalute.
+Un altro aspetto critico da considerare per il futuro sviluppo è la mancanza di scelta negli ambiti di investimento nei robo-advisor: l’utente è vincolato alle decisioni dell’istituzione senza poter selezionare settori specifici, delegando completamente la responsabilità.
+Nel trading algoritmico, invece, l’utente assume un ruolo attivo, un elemento che, se da un lato aumenta il rischio emotivo, dall’altro favorisce l’apprendimento, la personalizzazione e di conseguenza l'investimento in settori che l'utente ritiene realmente importanti.
+
+
+\section{Conclusioni}
+Cosa conviene perciò all’investitore medio, spesso un giovane alle prime armi, “spaventato” dalla complessità del mondo della borsa? 
+Per un principiante con bassa literacy finanziaria, un problema diffuso tra i giovani italiani e di tutto il mondo, un robo-advisor come MoneyFarm rappresenta la soluzione più pratica e sicura. 
+Offre stabilità, diversificazione automatica e gestione fiscale in regime amministrato, con costi a livelli accessibili. 
+Il cliente non deve fare altro che depositare i fondi e monitorare occasionalmente, ideale per chi cerca un passive income senza dedicare tempo allo studio dei mercati.
+
+Anche la strategia del piano di accumulo del capitale (PAC) si rivela robusta per investitori passivi, soprattutto se il portafoglio viene correttamente diversificato.
+Numerose Banche italiane, come Fineco, offrono servizi PAC che richiedono solamente la scelta di un profilo di investimento (profilazione tramite questioniario MiFID) per generare consigli d'investimento ad-hoc. Anche questi sono servizi in regime amministrato "senza pensieri".
+
+%Conclusione umana
+I migliori risultati, però, con ritorni esponenzialmente più elevati della concorrenza, rimangono nell'ambito del trading algoritmico.
+Quindi sorge spontaneamente la domanda: se tutti avessero a disposizione un sistema automatico per generare profitto, cosa rappresenterebbero gli investimenti?
+In un mondo di automazione totale, il mercato rischierebbe di ridursi a pura speculazione, con prezzi dettati da algoritmi piuttosto che da valutazioni fondamentali, come per esempio l'impatto di una determinata azienda quotata sull'innovazione del suo settore, o l'importanza di un'altra per ridurre l'impronta dell'uomo sull'ambiente.
+Come visto nel capitolo 3, il 2025 appena conclusosi è stato simbolo proprio di questo: il mercato è stato dominato dai bilanci riportati dalle principali aziende che si occupano di AI, a cui seguono finanziamenti anche "involontari" ed un ciclo vizioso d'investimento l'una nell'altra, che ha palesemente generato una bolla.
+L’AI può ottimizzare, ma l’elemento umano (curiosità, etica e responsabilità) resta essenziale per un ecosistema finanziario sostenibile.
+Non preoccuparsi di come e dove vengano posti i propri risparmi, e lasciare alle macchine il compito della gestione patrimoniale, sarebbe la ricetta per un disastro.
+
+Insomma, per concludere, la digitalizzazione dei processi ha permesso la nascita di numerose opzioni "low maintenance", quindi l'approccio al mondo della borsa non è mai stato cosi semplice.
+L'unico ostacolo da superare è l'istruzione: per i giovani, il vero passive income inizia dall'educazione finanziaria, che trasforma la paura in opportunità.
+
